@@ -1,7 +1,7 @@
 ---
 title: "Clojure - Syntax"
 date: 2022-12-16T17:43:56+01:00
-keywords: ["clojure"]
+tags: ["clojure"]
 ---
 
 # Syntax

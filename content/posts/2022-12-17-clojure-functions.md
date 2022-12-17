@@ -1,7 +1,7 @@
 ---
 title: "Clojure - Functions"
 date: 2022-12-17T08:52:40+01:00
-keywords: ["clojure"]
+tags: ["clojure"]
 ---
 
 # Functions
