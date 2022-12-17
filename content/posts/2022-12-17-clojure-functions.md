@@ -1,7 +1,6 @@
 ---
 title: "Clojure - Functions"
 date: 2022-12-17T08:52:40+01:00
-draft: true
 keywords: ["clojure"]
 ---
 
@@ -42,4 +41,84 @@ Function definitions are composed of five parts:
 Docstring represents a useful way to describe and document code. Dostrings can be viewed in 
 REPL with `(doc fn-name)`.
 
-## Parameters and Arity
+### Parameters and Arity
+
+Clojure functions support arity overloading meaning one function can be defined to do different things
+depending on the number of arguments passed to it.
+```clojure
+(defn multi-arity
+  ([first-arg second-arg]
+    (do-thing first-arg second-arg))
+  ([first-arg]
+    (do-thing first-arg)))
+```
+
+Clojure allows defining of variable-arity functions by including a *rest parameter*(&)
+```clojure
+(defn greet
+  [name]
+  (str "Hello, " name " !"))
+
+(defn greet-many
+  [& people]
+  (map greet people))
+
+(greet-many "Bill" "Anne")
+; => ("Hello, Bill !" "Hello, Anne !")
+```
+
+### Destructuring
+
+Destructuring is used to concisely bind names to values within a collection.
+```clojure
+(defn first-thing
+  [[f]]
+  f)
+
+(first-thing [1 2 3 4])
+; => 1
+```
+
+Maps can also be destructured in a similar way. 
+```clojure
+(defn greet-full
+  [{name :name surname :surname}]
+  (str "Hello, " name " " surname " !"))
+
+(greet-full {:name "Bill" :surname "Clinton"})
+; => "Hello Bill Clinton !"
+
+; Shorter syntax
+(defn greet-full
+  [{:keys [name surname]}]
+  (str "Hello, " name " " surname " !"))
+```
+
+## Anonymous Functions
+
+Functions that don't have names are called anonymous functions. In Clojure we can define 
+them in two ways:
+```clojure
+(fn [x] (* x 3))
+```
+```clojure
+#(* % 3)
+```
+
+The percent sign indicated the argument passed to the function. When a anonymous function takes
+multiple parameters we can distinguish them like this: %1, %2, %3 ...
+
+## Returining Functions
+
+Functions can return other functions and the returned functions are *closures* meaning they can access
+all the variables that were in scope when the function was created.
+```clojure
+(defn inc-maker
+  [inc-by]
+  #(+ % inc_by))
+
+(def inc3 (inc-maker 3))
+
+(inc3 7)
+; => 10
+```
