@@ -38,3 +38,25 @@ The last two lines would throw an error.
 (clojure.core/alias 'new 'space.new)
 (new/some-fn)
 ```
+
+## ns macro
+
+The `ns` macro is used when working with namespaces in files because it provides many 
+functionalities. You can use *references* with `ns` to use different functions of the macro. 
+The six possible references are:
+- `(:refer-clojure)` 
+- `(:require)` 
+- `(:use)` 
+- `(:import)` 
+- `(:load)` 
+- `(:gen-class)` 
+
+`(:require)` works like the `require` function just with different syntax. You can require 
+any number of files and use `:as` to alias them to different names. `:refer` can be used 
+in the same way as the `refer` function.
+```clojure
+(ns exmaple.core
+  (:require [clojure.string :as string]
+            [clojure.set :refer :all]))
+```
+
