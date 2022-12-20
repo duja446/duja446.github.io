@@ -32,8 +32,9 @@ get all the rows I need to just map this function over the whole data structure.
   (map sum-row (paragraph-lines s)))
 ```
 
-To solve the challenge I needed to sort by descending and for the first part take the first result and for the second
-part take top three results and sum them.
+## Part 1
+
+For the first part I needed to sort by descending and take the first result.
 ```clojure
 (defn part1
   "Solution for the first part"
@@ -41,7 +42,12 @@ part take top three results and sum them.
   (->> (total-elf s)
        (sort-by -)
        (first)))
+```
 
+## Part 2
+
+For the second just take the top three results and sum them up
+```clojure
 (defn part2
   "Solution for the second part"
   [s]
