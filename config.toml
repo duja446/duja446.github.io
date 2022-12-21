@@ -2,6 +2,7 @@ baseURL = 'https://duja446.github.io'
 languageCode = 'en-us'
 title = 'Duja446 Blog'
 theme = "cactus"
+googleAnalytics = "G-DQG750WZEB"
 
 [[menu.main]]
 name = "Home"
