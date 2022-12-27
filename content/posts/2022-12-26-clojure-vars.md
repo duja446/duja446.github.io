@@ -1,9 +1,8 @@
 ---
-title: "2022 12 26 Clojure Vars"
+title: "Clojure - Vars"
 date: 2022-12-26T21:09:03+01:00
-draft: true
 tags: ["clojure"]
-keywords: []
+keywords: ["vars"]
 ---
 
 # Vars
@@ -42,3 +41,19 @@ print operations.
 ; => Hello, World!
 ```
 
+Dynamic vars are most often used to set configuration values.
+
+## Altering the Var Root
+
+You can also change the root (underlying value) of the var. For example: 
+```clojure
+(def hello "Hello")
+hello
+; => "Hello"
+
+(alter-var-root #'hello (fn [_] "HELLO"))
+hello
+; => "HELLO"
+```
+
+This is rarely done because it goes against functional programming philosophy of immutability.
