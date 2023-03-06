@@ -1,7 +1,6 @@
 ---
 title: "Decoding Bencode in Clojure"
 date: 2023-03-06T07:54:35+01:00
-draft: true
 tags: ["clojure"]
 keywords: ["bencode", "java", "pushback"]
 ---
