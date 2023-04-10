@@ -101,6 +101,52 @@ Now that we know how to calculate all the values and encode them let's move on t
 
 ## Sending the Request
 
+To send the request we will use the [`clj-http` library](https://github.com/dakrone/clj-http). Let's see how we can use it to send an HTTP GET request:
+```clojure
+(require '[clj-http.client :as client])
+
+(client/get "https://google.com")
+```
+
+Now we know how to send a GET request but we still need to send our data with it. We do that by sending it as query parameters. As the name suggests they 
+are parameters stored in the url. An example would be `http://example.com/articles?sort=ASC&page=2`, here `sort` and `page` would be the keys with values `ASC` and `2`.
+The library provides a way to send these by specifying them in the optional parameters of the `client/get` function. But there is a problem with this approach, and it's the 
+fact that the library automatically encodes our data which is something we don't want because our `info_hash` is already encoded and encoding it again would mess it up.
+So instead of using that way we will code up our own simple function to do this for us.
+
+```clojure
+(defn- add-query-params
+  [url query-params]
+  (reduce 
+    (fn [acc [k v]] 
+      (let [connector (if (= (last acc) \?) "" "&")]
+       (str acc connector (name k) "=" v)))
+    (str url "?")
+    query-params))
+```
+
+Now we can write a function that will take our data and encode it and send the request.
+
+```clojure
+(defn query-tracker
+  [url info-hash peer-id left & {:keys [port downloaded uploaded] :or {port 6881 downloaded 0 uploaded 0}}]
+  (let [encoded-info-hash (urlencode-bytes info-hash)
+        url-with-params (add-query-params url 
+                                          {:info_hash encoded-info-hash
+                                           :peer_id peer-id
+                                           :left left
+                                           :port port
+                                           :downloaded downloaded
+                                           :uploaded uploaded})]
+    (-> url-with-params
+        (client/get {:as :byte-array})
+        :body
+        read-bencode-string)))
+```
+
+Here we just encode our `info_hash` and make our URL by adding our parameters to it. We then send the request and get the response as a `byte-array` so we can process it. 
+For a response we get a big map, but we only need the `:body` field so we extract it. Now because the tracker response is a Bencoded dictionary we decode it. 
+
 
 
 
