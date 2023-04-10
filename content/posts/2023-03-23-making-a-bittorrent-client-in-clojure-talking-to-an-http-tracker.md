@@ -1,7 +1,6 @@
 ---
 title: "Making a Bittorrent Client in Clojure: Talking to an HTTP Tracker"
 date: 2023-03-23T11:14:31+01:00
-draft: true
 tags: ["clojure", "bittorrent client"]
 keywors: ["bittorrent", "clojure", "peer-to-peer", "distributed computing", "file sharing", "open source", "functional programming", "networking", "Java Virtual Machine (JVM)", "protocol", "data streaming", "Java interoperability", "hashing"]
 ---
